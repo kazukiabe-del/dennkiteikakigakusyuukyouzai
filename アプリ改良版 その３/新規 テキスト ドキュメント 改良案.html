@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>電流の流しすぎチェック教材</title>
+
+<style>
+body {
+  font-family: "Noto Sans JP", "Segoe UI", "Hiragino Sans", "Meiryo", sans-serif;
+  margin: 0 auto;
+  max-width: 880px;
+  background: #f7f9fa;
+  padding: 0.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+section {
+  background: #fff;
+  padding: 0.6rem;
+  margin: 0.6rem 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  height: 670px; /* Chromebook画面内に収まる高さ */
+  overflow-y: auto;
+}
+h1, h2 { text-align: center; margin: 0.4rem 0; }
+.example-step {
+  border-left: 5px solid #3b82f6;
+  background: #eef4ff;
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.device-table th, .device-table td {
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+  text-align: center;
+}
+.device-table th { background: #e8eefc; }
+img {
+  width: 48px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+}
+input[type="number"], select {
+  width: 85%;
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  text-align: center;
+}
+button {
+  padding: 0.3rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  margin: 0.2rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.blue { background-color: #3b82f6; color: white; }
+.gray { background-color: #e5e7eb; }
+.text-green { color: green; font-weight: bold; }
+.text-red { color: red; font-weight: bold; }
+.result-box {
+  display: none;
+  background: #eef5ff;
+  border-radius: 8px;
+  padding: 0.4rem;
+  margin-top: 0.4rem;
+  border-left: 5px solid #3b82f6;
+  font-size: 0.9rem;
+}
+.center { text-align: center; }
+.circuit {
+  display: block;
+  margin: 0.4rem auto;
+  width: 70%;
+  max-width: 380px;
+}
+.circuit-large {
+  display: block;
+  margin: 0.4rem auto;
+  width: 80%;
+  max-width: 480px; /* ✅ 例題だけ拡大 */
+}
+@media (max-width: 768px) {
+  body { font-size: 0.9rem; }
+  img { width: 42px; }
+}
+</style>
+</head>
+<body>
+
+<h1>電流の流しすぎチェック教材（回路に注目しよう）</h1>
+
+<!-- 📘 例題 -->
+<section id="example">
+  <h2>📘 例題：電気を安全に使うために</h2>
+
+  <div class="center">
+    <img src="reidai.png" alt="例題回路図" class="circuit-large">
+  </div>
+
+  <div class="example-step">
+    <strong>ステップ1：</strong> 電気機器には「消費電力(W)」と「電圧(V)」が書かれています。  
+    これらから回路に流れる「電流(A)」を計算できます。  
+    <p>一般に、テーブルタップに加わる電圧は<strong>100V</strong>で、定格電流は<strong>15A</strong>です。</p>
+    <p>ドライヤー：800W ÷ 100V ＝ <strong>8.00A</strong><br>
+       ストーブ：600W ÷ 100V ＝ <strong>6.00A</strong></p>
+    <div>
+      <img src="hair_drier.png" alt="ドライヤー" style="width:80px; margin:0.3rem;">
+      <img src="kaden_stove.png" alt="ストーブ" style="width:80px; margin:0.3rem;">
+    </div>
+  </div>
+
+  <div class="example-step">
+    <strong>ステップ2：</strong> 機器を2つ使うと、テーブルタップの回路には2台分の電流が流れます。  
+    <p>ドライヤー：8.00A ＋ ストーブ：6.00A ＝ <strong>合計 14.00A</strong></p>
+  </div>
+
+  <div class="example-step">
+    <strong>ステップ3：</strong> テーブルタップの定格電流は <strong>15A</strong> です。  
+    <p>合計電流が15Aをこえると、<span class="text-red">電流の流しすぎで危険！</span><br>
+    15A以下なら、<span class="text-green">安全に使えます。</span></p>
+  </div>
+</section>
+
+<!-- ✏ 練習① -->
+<section id="quiz1">
+  <h2>✏ 練習①：2つの家電を使ったとき</h2>
+  <p><strong>条件：</strong> 電圧 <strong>100V</strong></p>
+
+  <div class="center">
+    <img src="huka1.png" alt="2負荷回路図" class="circuit">
+  </div>
+
+  <table class="device-table" id="table1">
+    <thead><tr><th>画像</th><th>機器名</th><th>消費電力(W)</th><th>電流(A)</th></tr></thead>
+    <tbody id="body1"></tbody>
+    <tfoot>
+      <tr><td colspan="3"><strong>合計電流(A)</strong></td><td><input type="number" id="total1" step="0.01"></td></tr>
+      <tr><td colspan="3"><strong>定格電流(A)</strong></td><td><input type="number" id="limit1" step="0.1"></td></tr>
+      <tr><td colspan="3"><strong>安全性の判断</strong></td>
+      <td><select id="safe1"><option value="">選択</option><option value="safe">安全</option><option value="danger">電流の流しすぎ</option></select></td></tr>
+    </tfoot>
+  </table>
+
+  <div class="center">
+    <button class="blue" onclick="grade(1)">採点する</button>
+    <button class="gray" onclick="regenerate(1)">問題を更新</button>
+  </div>
+
+  <div id="result1" class="result-box"></div>
+</section>
+
+<!-- ✏ 練習② -->
+<section id="quiz2">
+  <h2>✏ 練習②：3つの家電を使ったとき</h2>
+  <p><strong>条件：</strong> 電圧 <strong>100V</strong></p>
+
+  <div class="center">
+    <img src="huka3.png" alt="3負荷回路図" class="circuit">
+  </div>
+
+  <table class="device-table" id="table2">
+    <thead><tr><th>画像</th><th>機器名</th><th>消費電力(W)</th><th>電流(A)</th></tr></thead>
+    <tbody id="body2"></tbody>
+    <tfoot>
+      <tr><td colspan="3"><strong>合計電流(A)</strong></td><td><input type="number" id="total2" step="0.01"></td></tr>
+      <tr><td colspan="3"><strong>定格電流(A)</strong></td><td><input type="number" id="limit2" step="0.1"></td></tr>
+      <tr><td colspan="3"><strong>安全性の判断</strong></td>
+      <td><select id="safe2"><option value="">選択</option><option value="safe">安全</option><option value="danger">電流の流しすぎ</option></select></td></tr>
+    </tfoot>
+  </table>
+
+  <div class="center">
+    <button class="blue" onclick="grade(2)">採点する</button>
+    <button class="gray" onclick="regenerate(2)">問題を更新</button>
+  </div>
+
+  <div id="result2" class="result-box"></div>
+</section>
+
+<script>
+const VOLTAGE = 100, SAFE_LIMIT = 15;
+const allDevices = [
+  { name: "電子レンジ", watt: 1000, img: "cooking_microwave.png" },
+  { name: "テレビ", watt: 150, img: "kaden_tv_wide_frame.png" },
+  { name: "炊飯器", watt: 700, img: "cooking_suihanki.png" },
+  { name: "ポット", watt: 800, img: "cooking_denki_pot.png" },
+  { name: "PC", watt: 200, img: "kaden_laptop.png" },
+  { name: "ゲーム機", watt: 120, img: "portable_game.png" },
+  { name: "スマホ充電器", watt: 20, img: "smartphone_juuden.png" },
+  { name: "ラジオ", watt: 40, img: "rajio.jpg" },
+  { name: "冷蔵庫", watt: 150, img: "reizoukojpg.jpg" },
+  { name: "扇風機", watt: 60, img: "sennpuuki.jpg" },
+  { name: "ストーブ", watt: 600, img: "kaden_stove.png" }
+];
+
+function regenerate(num){
+  const cnt = num === 1 ? 2 : 3;
+  const devices = [...allDevices].sort(()=>Math.random()-0.5).slice(0,cnt);
+  const tbody = document.getElementById(`body${num}`);
+  tbody.innerHTML = "";
+  devices.forEach((d,i)=>{
+    tbody.innerHTML += `<tr><td><img src="${d.img}" alt="${d.name}"></td>
+      <td>${d.name}</td><td>${d.watt}</td>
+      <td><input type="number" id="curr${num}-${i}" step="0.01"></td></tr>`;
+  });
+  document.getElementById(`total${num}`).value="";
+  document.getElementById(`limit${num}`).value="";
+  document.getElementById(`safe${num}`).value="";
+  document.getElementById(`result${num}`).style.display="none";
+  tbody.dataset.devices = JSON.stringify(devices);
+}
+
+function grade(num){
+  const devices = JSON.parse(document.getElementById(`body${num}`).dataset.devices);
+  const correctCurrents = devices.map(d=>d.watt/VOLTAGE);
+  const totalCorrect = correctCurrents.reduce((a,b)=>a+b,0);
+  const userTotal = parseFloat(document.getElementById(`total${num}`).value);
+  const userLimit = parseFloat(document.getElementById(`limit${num}`).value);
+  const userSafety = document.getElementById(`safe${num}`).value;
+
+  let score=0, feedback="<h3>🧩 答え合わせ</h3><ul>";
+  devices.forEach((d,i)=>{
+    const userVal=parseFloat(document.getElementById(`curr${num}-${i}`).value);
+    const ok=!isNaN(userVal)&&userVal.toFixed(2)==correctCurrents[i].toFixed(2);
+    if(ok)score+=2;
+    feedback+=`<li>${d.name}=${correctCurrents[i].toFixed(2)}A ${ok?"✅":"❌"}</li>`;
+  });
+  feedback+="</ul>";
+
+  if(!isNaN(userTotal)&&userTotal.toFixed(2)==totalCorrect.toFixed(2))score++;
+  if(!isNaN(userLimit)&&userLimit.toFixed(1)==SAFE_LIMIT.toFixed(1))score++;
+  const correctSafety = totalCorrect<=SAFE_LIMIT?"safe":"danger";
+  if(userSafety===correctSafety)score++;
+
+  const result=document.getElementById(`result${num}`);
+  result.innerHTML=`${feedback}
+  <p>合計=${totalCorrect.toFixed(2)}A ／ 定格=${SAFE_LIMIT.toFixed(1)}A<br>${
+    totalCorrect<=SAFE_LIMIT
+      ? '<span class="text-green">安全です</span>'
+      : '<span class="text-red">電流の流しすぎで危険です！</span>'
+  }</p><p><strong>得点：</strong>${score}/${num===1?"7":"9"}点</p>`;
+  result.style.display="block";
+}
+
+regenerate(1);
+regenerate(2);
+</script>
+</body>
+</html>
